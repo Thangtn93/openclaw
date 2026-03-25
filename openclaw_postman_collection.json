@@ -1,0 +1,104 @@
+{
+  "info": {
+    "_postman_id": "c1f3d8e9-ab12-4c34-8e56-1d2a3b4c5d6e",
+    "name": "OpenClaw Gateway WebSocket RPC",
+    "description": "Danh sách các frame JSON-RPC sử dụng qua giao thức WebSocket (ws://127.0.0.1:18789) để xây dựng Web UI mới cho OpenClaw. \nLƯU Ý: Đây không phải là HTTP REST API! Hãy copy nội dung trong phần Body của từng Request và gửi dưới dạng WebSocket message.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Connect (Xác thực)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"req\",\n  \"id\": \"connect-uuid-1\",\n  \"method\": \"connect\",\n  \"params\": {\n    \"minProtocol\": 3,\n    \"maxProtocol\": 3,\n    \"client\": {\n      \"id\": \"control-ui\",\n      \"version\": \"custom\",\n      \"platform\": \"web\",\n      \"mode\": \"webchat\"\n    },\n    \"role\": \"operator\",\n    \"scopes\": [\n      \"operator.admin\",\n      \"operator.read\",\n      \"operator.write\"\n    ],\n    \"auth\": {\n      \"token\": \"<GATEWAY_TOKEN_CUA_BAN>\"\n    },\n    \"caps\": [\"tool-events\"]\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "ws://127.0.0.1:18789",
+          "protocol": "ws",
+          "host": ["127", "0", "0", "1"],
+          "port": "18789"
+        },
+        "description": "Gửi frame này sau khi mở kết nối WebSocket thành công để xác thực session."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Get List Models",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"req\",\n  \"id\": \"uuid-2\",\n  \"method\": \"models.list\",\n  \"params\": {}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "ws://127.0.0.1:18789",
+          "protocol": "ws",
+          "host": ["127", "0", "0", "1"],
+          "port": "18789"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Load Chat History",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"req\",\n  \"id\": \"uuid-3\",\n  \"method\": \"chat.history\",\n  \"params\": {\n    \"sessionKey\": \"default-session-id\",\n    \"limit\": 200\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "ws://127.0.0.1:18789",
+          "protocol": "ws",
+          "host": ["127", "0", "0", "1"],
+          "port": "18789"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Send Chat Message",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"req\",\n  \"id\": \"uuid-4\",\n  \"method\": \"chat.send\",\n  \"params\": {\n    \"sessionKey\": \"default-session-id\",\n    \"message\": \"Please write a hello world script in Python.\",\n    \"deliver\": false,\n    \"idempotencyKey\": \"run-uuid-1\",\n    \"attachments\": []\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "ws://127.0.0.1:18789",
+          "protocol": "ws",
+          "host": ["127", "0", "0", "1"],
+          "port": "18789"
+        },
+        "description": "Lưu ý: Bạn không nhận lại toàn bộ câu trả lời ở response của method này. \nThay vào đó Gateway sẽ stream sự kiện trả lời liên tục qua WebSocket với `type`: `event`, `event`: `chat.event`."
+      },
+      "response": []
+    }
+  ]
+}
