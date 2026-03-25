@@ -44,10 +44,10 @@ export type SkillsProps = {
 type StatusTabDef = { id: SkillsStatusFilter; label: string };
 
 const STATUS_TABS: StatusTabDef[] = [
-  { id: "all", label: "All" },
-  { id: "ready", label: "Ready" },
-  { id: "needs-setup", label: "Needs Setup" },
-  { id: "disabled", label: "Disabled" },
+  { id: "all", label: "Tất cả" },
+  { id: "ready", label: "Sẵn sàng" },
+  { id: "needs-setup", label: "Cần thiết lập" },
+  { id: "disabled", label: "Đã tắt" },
 ];
 
 function skillMatchesStatus(skill: SkillStatusEntry, status: SkillsStatusFilter): boolean {
@@ -110,11 +110,11 @@ export function renderSkills(props: SkillsProps) {
     <section class="card">
       <div class="row" style="justify-content: space-between;">
         <div>
-          <div class="card-title">Skills</div>
-          <div class="card-sub">Installed skills and their status.</div>
+          <div class="card-title">Kỹ năng</div>
+          <div class="card-sub">Các kỹ năng đã cài đặt và trạng thái của chúng.</div>
         </div>
         <button class="btn" ?disabled=${props.loading || !props.connected} @click=${props.onRefresh}>
-          ${props.loading ? "Loading\u2026" : "Refresh"}
+          ${props.loading ? "Đang tải\u2026" : "Làm mới"}
         </button>
       </div>
 
@@ -137,18 +137,18 @@ export function renderSkills(props: SkillsProps) {
           href="https://clawhub.com"
           target="_blank"
           rel="noreferrer"
-          title="Browse skills on ClawHub"
-        >Browse Skills Store</a>
+          title="Xem kỹ năng trên ClawHub"
+        >Mở cửa hàng kỹ năng</a>
         <label class="field" style="flex: 1; min-width: 180px;">
           <input
             .value=${props.filter}
             @input=${(e: Event) => props.onFilterChange((e.target as HTMLInputElement).value)}
-            placeholder="Search skills"
+            placeholder="Tìm kỹ năng"
             autocomplete="off"
             name="skills-filter"
           />
         </label>
-        <div class="muted">${filtered.length} shown</div>
+        <div class="muted">${filtered.length} hiển thị</div>
       </div>
 
       ${
@@ -163,8 +163,8 @@ export function renderSkills(props: SkillsProps) {
               <div class="muted" style="margin-top: 16px">
                 ${
                   !props.connected && !props.report
-                    ? "Not connected to gateway."
-                    : "No skills found."
+                    ? "Chưa kết nối tới gateway."
+                    : "Không tìm thấy kỹ năng."
                 }
               </div>
             `
@@ -252,7 +252,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
             ${skill.emoji ? html`<span style="font-size: 18px;">${skill.emoji}</span>` : nothing}
             <span>${skill.name}</span>
           </div>
-          <button class="btn btn--sm" @click=${props.onDetailClose}>Close</button>
+          <button class="btn btn--sm" @click=${props.onDetailClose}>Đóng</button>
         </div>
         <div class="md-preview-dialog__body" style="display: grid; gap: 16px;">
           <div>
@@ -264,7 +264,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
             missing.length > 0
               ? html`
                 <div class="callout" style="border-color: var(--warn-subtle); background: var(--warn-subtle); color: var(--warn);">
-                  <div style="font-weight: 600; margin-bottom: 4px;">Missing requirements</div>
+                  <div style="font-weight: 600; margin-bottom: 4px;">Thiếu yêu cầu</div>
                   <div>${missing.join(", ")}</div>
                 </div>
               `
@@ -275,7 +275,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
             reasons.length > 0
               ? html`
                 <div class="muted" style="font-size: 13px;">
-                  Reason: ${reasons.join(", ")}
+                  Lý do: ${reasons.join(", ")}
                 </div>
               `
               : nothing
@@ -292,7 +292,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
               />
             </label>
             <span style="font-size: 13px; font-weight: 500;">
-              ${skill.disabled ? "Disabled" : "Enabled"}
+              ${skill.disabled ? "Đã tắt" : "Đang bật"}
             </span>
             ${
               canInstall
@@ -301,7 +301,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
                   ?disabled=${busy}
                   @click=${() => props.onInstall(skill.skillKey, skill.name, skill.install[0].id)}
                 >
-                  ${busy ? "Installing\u2026" : skill.install[0].label}
+                  ${busy ? "Đang cài đặt\u2026" : skill.install[0].label}
                 </button>`
                 : nothing
             }
@@ -322,7 +322,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
               ? html`
                 <div style="display: grid; gap: 8px;">
                   <div class="field">
-                    <span>API key <span class="muted" style="font-weight: normal; font-size: 0.88em;">(${skill.primaryEnv})</span></span>
+                    <span>Khoá API <span class="muted" style="font-weight: normal; font-size: 0.88em;">(${skill.primaryEnv})</span></span>
                     <input
                       type="password"
                       .value=${apiKey}
@@ -334,7 +334,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
                     const href = safeExternalHref(skill.homepage);
                     return href
                       ? html`<div class="muted" style="font-size: 13px;">
-                        Get your key: <a href="${href}" target="_blank" rel="noopener noreferrer">${skill.homepage}</a>
+                        Lấy khoá của bạn: <a href="${href}" target="_blank" rel="noopener noreferrer">${skill.homepage}</a>
                       </div>`
                       : nothing;
                   })()}
@@ -343,7 +343,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
                     ?disabled=${busy}
                     @click=${() => props.onSaveKey(skill.skillKey)}
                   >
-                    Save key
+                    Lưu khoá
                   </button>
                 </div>
               `
@@ -351,7 +351,7 @@ function renderSkillDetail(skill: SkillStatusEntry, props: SkillsProps) {
           }
 
           <div style="border-top: 1px solid var(--border); padding-top: 12px; display: grid; gap: 6px; font-size: 12px; color: var(--muted);">
-            <div><span style="font-weight: 600;">Source:</span> ${skill.source}</div>
+            <div><span style="font-weight: 600;">Nguồn:</span> ${skill.source}</div>
             <div style="font-family: var(--mono); word-break: break-all;">${skill.filePath}</div>
             ${(() => {
               const safeHref = safeExternalHref(skill.homepage);

@@ -505,7 +505,7 @@ describe("chat view", () => {
 
     const indicator = container.querySelector(".compaction-indicator--active");
     expect(indicator).not.toBeNull();
-    expect(indicator?.textContent).toContain("Compacting context...");
+    expect(indicator?.textContent).toContain("Đang nén ngữ cảnh...");
   });
 
   it("renders completion indicator shortly after compaction", () => {
@@ -526,7 +526,7 @@ describe("chat view", () => {
 
     const indicator = container.querySelector(".compaction-indicator--complete");
     expect(indicator).not.toBeNull();
-    expect(indicator?.textContent).toContain("Context compacted");
+    expect(indicator?.textContent).toContain("Đã nén ngữ cảnh");
     nowSpy.mockRestore();
   });
 
@@ -569,7 +569,7 @@ describe("chat view", () => {
 
     const indicator = container.querySelector(".compaction-indicator--fallback");
     expect(indicator).not.toBeNull();
-    expect(indicator?.textContent).toContain("Fallback active: deepinfra/moonshotai/Kimi-K2.5");
+    expect(indicator?.textContent).toContain("Fallback đang bật: deepinfra/moonshotai/Kimi-K2.5");
     nowSpy.mockRestore();
   });
 
@@ -615,7 +615,7 @@ describe("chat view", () => {
 
     const indicator = container.querySelector(".compaction-indicator--fallback-cleared");
     expect(indicator).not.toBeNull();
-    expect(indicator?.textContent).toContain("Fallback cleared: fireworks/minimax-m2p5");
+    expect(indicator?.textContent).toContain("Đã xoá fallback: fireworks/minimax-m2p5");
     nowSpy.mockRestore();
   });
 
@@ -633,11 +633,11 @@ describe("chat view", () => {
       container,
     );
 
-    const stopButton = container.querySelector<HTMLButtonElement>('button[title="Stop"]');
+    const stopButton = container.querySelector<HTMLButtonElement>('button[title="Dừng"]');
     expect(stopButton).not.toBeUndefined();
     stopButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(onAbort).toHaveBeenCalledTimes(1);
-    expect(container.textContent).not.toContain("New session");
+    expect(container.textContent).not.toContain("Phiên mới");
   });
 
   it("shows a new session button when aborting is unavailable", () => {
@@ -654,12 +654,12 @@ describe("chat view", () => {
     );
 
     const newSessionButton = container.querySelector<HTMLButtonElement>(
-      'button[title="New session"]',
+      'button[title="Phiên mới"]',
     );
     expect(newSessionButton).not.toBeUndefined();
     newSessionButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(onNewSession).toHaveBeenCalledTimes(1);
-    expect(container.textContent).not.toContain("Stop");
+    expect(container.textContent).not.toContain("Dừng");
   });
 
   it("shows sender labels from sanitized gateway messages instead of generic You", () => {
@@ -684,7 +684,7 @@ describe("chat view", () => {
       node.textContent?.trim(),
     );
     expect(senderLabels).toContain("Iris");
-    expect(senderLabels).not.toContain("You");
+    expect(senderLabels).not.toContain("Bạn");
   });
 
   it("keeps consecutive user messages from different senders in separate groups", () => {

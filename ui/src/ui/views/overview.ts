@@ -93,8 +93,8 @@ export function renderOverview(props: OverviewProps) {
             href="https://docs.openclaw.ai/web/control-ui#device-pairing-first-connection"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
-            title="Device pairing docs (opens in new tab)"
-            >Docs: Device pairing</a
+            title="Tài liệu ghép đôi thiết bị (mở tab mới)"
+            >Tài liệu: Ghép đôi thiết bị</a
           >
         </div>
       </div>
@@ -126,8 +126,8 @@ export function renderOverview(props: OverviewProps) {
               href="https://docs.openclaw.ai/web/dashboard"
               target=${EXTERNAL_LINK_TARGET}
               rel=${buildExternalLinkRel()}
-              title="Control UI auth docs (opens in new tab)"
-              >Docs: Control UI auth</a
+              title="Tài liệu xác thực Control UI (mở tab mới)"
+              >Tài liệu: Xác thực Control UI</a
             >
           </div>
         </div>
@@ -142,8 +142,8 @@ export function renderOverview(props: OverviewProps) {
             href="https://docs.openclaw.ai/web/dashboard"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
-            title="Control UI auth docs (opens in new tab)"
-            >Docs: Control UI auth</a
+            title="Tài liệu xác thực Control UI (mở tab mới)"
+            >Tài liệu: Xác thực Control UI</a
           >
         </div>
       </div>
@@ -173,8 +173,8 @@ export function renderOverview(props: OverviewProps) {
             href="https://docs.openclaw.ai/gateway/tailscale"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
-            title="Tailscale Serve docs (opens in new tab)"
-            >Docs: Tailscale Serve</a
+            title="Tài liệu Tailscale Serve (mở tab mới)"
+            >Tài liệu: Tailscale Serve</a
           >
           <span class="muted"> · </span>
           <a
@@ -182,8 +182,8 @@ export function renderOverview(props: OverviewProps) {
             href="https://docs.openclaw.ai/web/control-ui#insecure-http"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
-            title="Insecure HTTP docs (opens in new tab)"
-            >Docs: Insecure HTTP</a
+            title="Tài liệu HTTP không an toàn (mở tab mới)"
+            >Tài liệu: HTTP không an toàn</a
           >
         </div>
       </div>
@@ -237,8 +237,8 @@ export function renderOverview(props: OverviewProps) {
                       type="button"
                       class="btn btn--icon ${props.showGatewayToken ? "active" : ""}"
                       style="width: 36px; height: 36px;"
-                      title=${props.showGatewayToken ? "Hide token" : "Show token"}
-                      aria-label="Toggle token visibility"
+                      title=${props.showGatewayToken ? "Ẩn token" : "Hiện token"}
+                      aria-label="Bật/tắt hiển thị token"
                       aria-pressed=${props.showGatewayToken}
                       @click=${props.onToggleGatewayTokenVisibility}
                     >
@@ -258,14 +258,14 @@ export function renderOverview(props: OverviewProps) {
                         const v = (e.target as HTMLInputElement).value;
                         props.onPasswordChange(v);
                       }}
-                      placeholder="system or shared password"
+                      placeholder="mật khẩu hệ thống hoặc mật khẩu dùng chung"
                     />
                     <button
                       type="button"
                       class="btn btn--icon ${props.showGatewayPassword ? "active" : ""}"
                       style="width: 36px; height: 36px;"
-                      title=${props.showGatewayPassword ? "Hide password" : "Show password"}
-                      aria-label="Toggle password visibility"
+                      title=${props.showGatewayPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                      aria-label="Bật/tắt hiển thị mật khẩu"
                       aria-pressed=${props.showGatewayPassword}
                       @click=${props.onToggleGatewayPasswordVisibility}
                     >

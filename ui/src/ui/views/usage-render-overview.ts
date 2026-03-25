@@ -102,7 +102,7 @@ function renderFilterChips(
                 class="filter-chip-remove"
                 @click=${onClearDays}
                 title=${t("usage.filters.remove")}
-                aria-label="Remove days filter"
+                aria-label="Gỡ bộ lọc ngày"
               >
                 ×
               </button>
@@ -119,7 +119,7 @@ function renderFilterChips(
                 class="filter-chip-remove"
                 @click=${onClearHours}
                 title=${t("usage.filters.remove")}
-                aria-label="Remove hours filter"
+                aria-label="Gỡ bộ lọc giờ"
               >
                 ×
               </button>
@@ -136,7 +136,7 @@ function renderFilterChips(
                 class="filter-chip-remove"
                 @click=${onClearSessions}
                 title=${t("usage.filters.remove")}
-                aria-label="Remove session filter"
+                aria-label="Gỡ bộ lọc phiên"
               >
                 ×
               </button>

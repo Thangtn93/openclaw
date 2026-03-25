@@ -88,44 +88,44 @@ export function renderAgentOverview(params: {
 
   return html`
     <section class="card">
-      <div class="card-title">Overview</div>
-      <div class="card-sub">Workspace paths and identity metadata.</div>
+      <div class="card-title">Tổng quan</div>
+      <div class="card-sub">Đường dẫn workspace và metadata danh tính.</div>
 
       <div class="agents-overview-grid" style="margin-top: 16px;">
         <div class="agent-kv">
-          <div class="label">Workspace</div>
+          <div class="label">Không gian làm việc</div>
           <div>
             <button
               type="button"
               class="workspace-link mono"
               @click=${() => onSelectPanel("files")}
-              title="Open Files tab"
+              title="Mở tab Tệp"
             >${workspace}</button>
           </div>
         </div>
         <div class="agent-kv">
-          <div class="label">Primary Model</div>
+          <div class="label">Model chính</div>
           <div class="mono">${model}</div>
         </div>
         <div class="agent-kv">
-          <div class="label">Skills Filter</div>
-          <div>${skillFilter ? `${skillCount} selected` : "all skills"}</div>
+          <div class="label">Bộ lọc kỹ năng</div>
+          <div>${skillFilter ? `${skillCount} đã chọn` : "tất cả kỹ năng"}</div>
         </div>
       </div>
 
       ${
         configDirty
           ? html`
-              <div class="callout warn" style="margin-top: 16px">You have unsaved config changes.</div>
+              <div class="callout warn" style="margin-top: 16px">Bạn có thay đổi cấu hình chưa lưu.</div>
             `
           : nothing
       }
 
       <div class="agent-model-select" style="margin-top: 20px;">
-        <div class="label">Model Selection</div>
+        <div class="label">Chọn model</div>
         <div class="agent-model-fields">
           <label class="field">
-            <span>Primary model${isDefault ? " (default)" : ""}</span>
+            <span>Model chính${isDefault ? " (mặc định)" : ""}</span>
             <select
               .value=${isDefault ? (effectivePrimary ?? "") : (entryPrimary ?? "")}
               ?disabled=${disabled}
@@ -135,11 +135,11 @@ export function renderAgentOverview(params: {
               ${
                 isDefault
                   ? html`
-                      <option value="">Not set</option>
+                      <option value="">Chưa đặt</option>
                     `
                   : html`
                       <option value="">
-                        ${defaultPrimary ? `Inherit default (${defaultPrimary})` : "Inherit default"}
+                        ${defaultPrimary ? `Kế thừa mặc định (${defaultPrimary})` : "Kế thừa mặc định"}
                       </option>
                     `
               }
@@ -147,7 +147,7 @@ export function renderAgentOverview(params: {
             </select>
           </label>
           <div class="field">
-            <span>Fallbacks</span>
+            <span>Fallback</span>
             <div class="agent-chip-input" @click=${(e: Event) => {
               const container = e.currentTarget as HTMLElement;
               const input = container.querySelector("input");
@@ -186,7 +186,7 @@ export function renderAgentOverview(params: {
         </div>
         <div class="agent-model-actions">
           <button type="button" class="btn btn--sm" ?disabled=${configLoading} @click=${onConfigReload}>
-            Reload Config
+            Tải lại cấu hình
           </button>
           <button
             type="button"
@@ -194,7 +194,7 @@ export function renderAgentOverview(params: {
             ?disabled=${configSaving || !configDirty}
             @click=${onConfigSave}
           >
-            ${configSaving ? "Saving…" : "Save"}
+            ${configSaving ? "Đang lưu…" : "Lưu"}
           </button>
         </div>
       </div>

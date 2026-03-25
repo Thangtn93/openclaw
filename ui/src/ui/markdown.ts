@@ -186,7 +186,7 @@ htmlEscapeRenderer.image = (token: { href?: string | null; text?: string | null 
 
 function normalizeMarkdownImageLabel(text?: string | null): string {
   const trimmed = text?.trim();
-  return trimmed ? trimmed : "image";
+  return trimmed ? trimmed : "hình ảnh";
 }
 
 htmlEscapeRenderer.code = ({
@@ -207,7 +207,7 @@ htmlEscapeRenderer.code = ({
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-  const copyBtn = `<button type="button" class="code-block-copy" data-code="${attrSafe}" aria-label="Copy code"><span class="code-block-copy__idle">Copy</span><span class="code-block-copy__done">Copied!</span></button>`;
+  const copyBtn = `<button type="button" class="code-block-copy" data-code="${attrSafe}" aria-label="Sao chép mã"><span class="code-block-copy__idle">Sao chép</span><span class="code-block-copy__done">Đã sao chép!</span></button>`;
   const header = `<div class="code-block-header">${langLabel}${copyBtn}</div>`;
 
   const trimmed = text.trim();
@@ -219,7 +219,7 @@ htmlEscapeRenderer.code = ({
 
   if (isJson) {
     const lineCount = text.split("\n").length;
-    const label = lineCount > 1 ? `JSON &middot; ${lineCount} lines` : "JSON";
+    const label = lineCount > 1 ? `JSON &middot; ${lineCount} dòng` : "JSON";
     return `<details class="json-collapse"><summary>${label}</summary><div class="code-block-wrapper">${header}${codeBlock}</div></details>`;
   }
 

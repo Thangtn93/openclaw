@@ -812,13 +812,13 @@ export function renderConfig(props: ConfigProps) {
 	                  <span class="config-changes-badge"
 	                    >${
                         formMode === "raw"
-                          ? "Unsaved changes"
-                          : `${diff.length} unsaved change${diff.length !== 1 ? "s" : ""}`
+                          ? "Thay đổi chưa lưu"
+                          : `${diff.length} thay đổi chưa lưu`
                       }</span
 	                  >
 	                `
                 : html`
-                    <span class="config-status muted">No changes</span>
+                    <span class="config-status muted">Không có thay đổi</span>
                   `
             }
           </div>
@@ -828,10 +828,10 @@ export function renderConfig(props: ConfigProps) {
                 ? html`
                     <button
                       class="btn btn--sm"
-                      title=${props.configPath ? `Open ${props.configPath}` : "Open config file"}
+                      title=${props.configPath ? `Mở ${props.configPath}` : "Mở tệp cấu hình"}
                       @click=${props.onOpenFile}
                     >
-                      ${icons.fileText} Open
+                      ${icons.fileText} Mở
                     </button>
                   `
                 : nothing
@@ -841,28 +841,28 @@ export function renderConfig(props: ConfigProps) {
               ?disabled=${props.loading}
               @click=${props.onReload}
             >
-              ${props.loading ? "Loading…" : "Reload"}
+              ${props.loading ? "Đang tải…" : "Tải lại"}
             </button>
             <button
               class="btn btn--sm primary"
               ?disabled=${!canSave}
               @click=${props.onSave}
             >
-              ${props.saving ? "Saving…" : "Save"}
+              ${props.saving ? "Đang lưu…" : "Lưu"}
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!canApply}
               @click=${props.onApply}
             >
-              ${props.applying ? "Applying…" : "Apply"}
+              ${props.applying ? "Đang áp dụng…" : "Áp dụng"}
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!canUpdate}
               @click=${props.onUpdate}
             >
-              ${props.updating ? "Updating…" : "Update"}
+              ${props.updating ? "Đang cập nhật…" : "Cập nhật"}
             </button>
           </div>
         </div>
@@ -886,8 +886,8 @@ export function renderConfig(props: ConfigProps) {
                       <input
                         type="text"
                         class="config-search__input"
-                        placeholder="Search settings..."
-                        aria-label="Search settings"
+                        placeholder="Tìm trong cài đặt..."
+                        aria-label="Tìm trong cài đặt"
                         .value=${props.searchQuery}
                         @input=${(e: Event) =>
                           props.onSearchChange((e.target as HTMLInputElement).value)}
@@ -897,7 +897,7 @@ export function renderConfig(props: ConfigProps) {
                           ? html`
                               <button
                                 class="config-search__clear"
-                                aria-label="Clear search"
+                                aria-label="Xoá tìm kiếm"
                                 @click=${() => props.onSearchChange("")}
                               >
                                 ×
@@ -911,7 +911,7 @@ export function renderConfig(props: ConfigProps) {
               : nothing
           }
 
-          <div class="config-top-tabs__scroller" role="tablist" aria-label="Settings sections">
+          <div class="config-top-tabs__scroller" role="tablist" aria-label="Mục cài đặt">
             ${topTabs.map(
               (tab) => html`
                 <button
@@ -938,14 +938,14 @@ export function renderConfig(props: ConfigProps) {
                   <line x1="12" y1="9" x2="12" y2="13"></line>
                   <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
-                <span class="config-validity-warning__text">Your configuration is invalid. Some settings may not work as expected.</span>
+                <span class="config-validity-warning__text">Cấu hình của bạn không hợp lệ. Một số cài đặt có thể không hoạt động như mong đợi.</span>
                 <button
                   class="btn btn--sm"
                   @click=${() => {
                     cvs.validityDismissed = true;
                     requestUpdate();
                   }}
-                >Don't remind again</button>
+                >Đừng nhắc lại</button>
               </div>
             `
             : nothing
@@ -1086,25 +1086,23 @@ export function renderConfig(props: ConfigProps) {
                       formUnsafe
                         ? html`
                             <div class="callout info" style="margin-bottom: 12px">
-                              Your config contains fields the form editor can't safely represent. Use Raw mode to edit those
-                              entries.
+                              Cấu hình của bạn có các trường mà trình soạn thảo dạng form không thể biểu diễn an toàn. Dùng chế
+                              độ Raw để sửa các mục đó.
                             </div>
                           `
                         : nothing
                     }
                     <div class="field config-raw-field">
                       <span style="display:flex;align-items:center;gap:8px;">
-                        Raw config (JSON/JSON5)
+                        Cấu hình raw (JSON/JSON5)
                         ${
                           sensitiveCount > 0
                             ? html`
-                              <span class="pill pill--sm">${sensitiveCount} secret${sensitiveCount === 1 ? "" : "s"} ${blurred ? "redacted" : "visible"}</span>
+                              <span class="pill pill--sm">${sensitiveCount} mục bí mật ${blurred ? "đã che" : "đang hiện"}</span>
                               <button
                                 class="btn btn--icon config-raw-toggle ${blurred ? "" : "active"}"
-                                title=${
-                                  blurred ? "Reveal sensitive values" : "Hide sensitive values"
-                                }
-                                aria-label="Toggle raw config redaction"
+                                title=${blurred ? "Hiện giá trị nhạy cảm" : "Ẩn giá trị nhạy cảm"}
+                                aria-label="Bật/tắt che giá trị nhạy cảm"
                                 aria-pressed=${!blurred}
                                 @click=${() => {
                                   cvs.rawRevealed = !cvs.rawRevealed;
@@ -1119,7 +1117,7 @@ export function renderConfig(props: ConfigProps) {
                       </span>
                       <textarea
                         class="${blurred ? "config-raw-redacted" : ""}"
-                        placeholder=${blurred ? REDACTED_PLACEHOLDER : "Raw config (JSON/JSON5)"}
+                        placeholder=${blurred ? REDACTED_PLACEHOLDER : "Cấu hình raw (JSON/JSON5)"}
                         .value=${blurred ? "" : props.raw}
                         ?readonly=${blurred}
                         @input=${(e: Event) => {

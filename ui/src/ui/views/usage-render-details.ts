@@ -1027,7 +1027,7 @@ function renderSessionLogsCompact(
         <select
           multiple
           size="4"
-          aria-label="Filter by role"
+          aria-label="Lọc theo vai trò"
           @change=${(event: Event) =>
             onFilterRolesChange(
               Array.from((event.target as HTMLSelectElement).selectedOptions).map(
@@ -1043,7 +1043,7 @@ function renderSessionLogsCompact(
         <select
           multiple
           size="4"
-          aria-label="Filter by tool"
+          aria-label="Lọc theo công cụ"
           @change=${(event: Event) =>
             onFilterToolsChange(
               Array.from((event.target as HTMLSelectElement).selectedOptions).map(

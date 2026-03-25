@@ -170,28 +170,28 @@ export function renderAgentTools(params: {
     <section class="card">
       <div class="row" style="justify-content: space-between; flex-wrap: wrap;">
         <div style="min-width: 0;">
-          <div class="card-title">Tool Access</div>
+          <div class="card-title">Quyền truy cập công cụ</div>
           <div class="card-sub">
-            Profile + per-tool overrides for this agent.
-            <span class="mono">${enabledCount}/${toolIds.length}</span> enabled.
+            Profile + ghi đè theo từng công cụ cho agent này.
+            <span class="mono">${enabledCount}/${toolIds.length}</span> đang bật.
           </div>
         </div>
         <div class="row" style="gap: 8px; flex-wrap: wrap;">
           <button class="btn btn--sm" ?disabled=${!editable} @click=${() => updateAll(true)}>
-            Enable All
+            Bật tất cả
           </button>
           <button class="btn btn--sm" ?disabled=${!editable} @click=${() => updateAll(false)}>
-            Disable All
+            Tắt tất cả
           </button>
           <button class="btn btn--sm" ?disabled=${params.configLoading} @click=${params.onConfigReload}>
-            Reload Config
+            Tải lại cấu hình
           </button>
           <button
             class="btn btn--sm primary"
             ?disabled=${params.configSaving || !params.configDirty}
             @click=${params.onConfigSave}
           >
-            ${params.configSaving ? "Saving…" : "Save"}
+            ${params.configSaving ? "Đang lưu…" : "Lưu"}
           </button>
         </div>
       </div>
@@ -200,7 +200,7 @@ export function renderAgentTools(params: {
         !params.configForm
           ? html`
               <div class="callout info" style="margin-top: 12px">
-                Load the gateway config to adjust tool profiles.
+                Tải cấu hình gateway để điều chỉnh profile công cụ.
               </div>
             `
           : nothing
@@ -209,7 +209,8 @@ export function renderAgentTools(params: {
         hasAgentAllow
           ? html`
               <div class="callout info" style="margin-top: 12px">
-                This agent is using an explicit allowlist in config. Tool overrides are managed in the Config tab.
+                Agent này đang dùng allowlist tường minh trong cấu hình. Ghi đè công cụ được quản lý trong tab Cấu
+                hình.
               </div>
             `
           : nothing
@@ -271,25 +272,25 @@ export function renderAgentTools(params: {
           !params.runtimeSessionMatchesSelectedAgent
             ? html`
                 <div class="callout info" style="margin-top: 12px">
-                  Switch chat to this agent to view its live runtime tools.
+                  Chuyển chat sang agent này để xem công cụ runtime trực tiếp.
                 </div>
               `
             : params.toolsEffectiveLoading &&
                 !params.toolsEffectiveResult &&
                 !params.toolsEffectiveError
               ? html`
-                  <div class="callout info" style="margin-top: 12px">Loading available tools…</div>
+                  <div class="callout info" style="margin-top: 12px">Đang tải công cụ khả dụng…</div>
                 `
               : params.toolsEffectiveError
                 ? html`
                     <div class="callout info" style="margin-top: 12px">
-                      Could not load available tools for this session.
+                      Không thể tải công cụ khả dụng cho phiên này.
                     </div>
                   `
                 : (params.toolsEffectiveResult?.groups?.length ?? 0) === 0
                   ? html`
                       <div class="callout info" style="margin-top: 12px">
-                        No tools are available for this session right now.
+                        Hiện không có công cụ nào khả dụng cho phiên này.
                       </div>
                     `
                   : html`
@@ -322,7 +323,7 @@ export function renderAgentTools(params: {
       </div>
 
       <div class="agent-tools-presets" style="margin-top: 16px;">
-        <div class="label">Quick Presets</div>
+        <div class="label">Preset nhanh</div>
         <div class="agent-tools-buttons">
           ${profileOptions.map(
             (option) => html`
@@ -432,9 +433,9 @@ export function renderAgentSkills(params: {
     <section class="card">
       <div class="row" style="justify-content: space-between; flex-wrap: wrap;">
         <div style="min-width: 0;">
-          <div class="card-title">Skills</div>
+          <div class="card-title">Kỹ năng</div>
           <div class="card-sub">
-            Per-agent skill allowlist and workspace skills.
+            Allowlist kỹ năng theo agent và kỹ năng trong workspace.
             ${
               totalCount > 0
                 ? html`<span class="mono">${enabledCount}/${totalCount}</span>`
@@ -445,36 +446,36 @@ export function renderAgentSkills(params: {
         <div class="row" style="gap: 8px; flex-wrap: wrap;">
           <div class="row" style="gap: 4px; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2px;">
             <button class="btn btn--sm" ?disabled=${!editable} @click=${() => params.onClear(params.agentId)}>
-              Enable All
+              Bật tất cả
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!editable}
               @click=${() => params.onDisableAll(params.agentId)}
             >
-              Disable All
+              Tắt tất cả
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!editable || !usingAllowlist}
               @click=${() => params.onClear(params.agentId)}
-              title="Remove per-agent allowlist and use all skills"
+              title="Xoá allowlist theo agent và dùng tất cả kỹ năng"
             >
-              Reset
+              Đặt lại
             </button>
           </div>
           <button class="btn btn--sm" ?disabled=${params.configLoading} @click=${params.onConfigReload}>
-            Reload Config
+            Tải lại cấu hình
           </button>
           <button class="btn btn--sm" ?disabled=${params.loading} @click=${params.onRefresh}>
-            ${params.loading ? "Loading…" : "Refresh"}
+            ${params.loading ? "Đang tải…" : "Làm mới"}
           </button>
           <button
             class="btn btn--sm primary"
             ?disabled=${params.configSaving || !params.configDirty}
             @click=${params.onConfigSave}
           >
-            ${params.configSaving ? "Saving…" : "Save"}
+            ${params.configSaving ? "Đang lưu…" : "Lưu"}
           </button>
         </div>
       </div>
@@ -483,7 +484,7 @@ export function renderAgentSkills(params: {
         !params.configForm
           ? html`
               <div class="callout info" style="margin-top: 12px">
-                Load the gateway config to set per-agent skills.
+                Tải cấu hình gateway để thiết lập kỹ năng theo agent.
               </div>
             `
           : nothing
@@ -491,11 +492,13 @@ export function renderAgentSkills(params: {
       ${
         usingAllowlist
           ? html`
-              <div class="callout info" style="margin-top: 12px">This agent uses a custom skill allowlist.</div>
+              <div class="callout info" style="margin-top: 12px">
+                Agent này đang dùng allowlist kỹ năng tuỳ chỉnh.
+              </div>
             `
           : html`
               <div class="callout info" style="margin-top: 12px">
-                All skills are enabled. Disabling any skill will create a per-agent allowlist.
+                Tất cả kỹ năng đang bật. Khi tắt bất kỳ kỹ năng nào, hệ thống sẽ tạo allowlist theo agent.
               </div>
             `
       }
@@ -503,7 +506,7 @@ export function renderAgentSkills(params: {
         !reportReady && !params.loading
           ? html`
               <div class="callout info" style="margin-top: 12px">
-                Load skills for this agent to view workspace-specific entries.
+                Tải kỹ năng cho agent này để xem các mục theo workspace.
               </div>
             `
           : nothing
@@ -516,22 +519,22 @@ export function renderAgentSkills(params: {
 
       <div class="filters" style="margin-top: 14px;">
         <label class="field" style="flex: 1;">
-          <span>Filter</span>
+          <span>Lọc</span>
           <input
             .value=${params.filter}
             @input=${(e: Event) => params.onFilterChange((e.target as HTMLInputElement).value)}
-            placeholder="Search skills"
+            placeholder="Tìm kỹ năng"
             autocomplete="off"
             name="agent-skills-filter"
           />
         </label>
-        <div class="muted">${filtered.length} shown</div>
+        <div class="muted">${filtered.length} hiển thị</div>
       </div>
 
       ${
         filtered.length === 0
           ? html`
-              <div class="muted" style="margin-top: 16px">No skills found.</div>
+              <div class="muted" style="margin-top: 16px">Không tìm thấy kỹ năng.</div>
             `
           : html`
               <div class="agent-skills-groups" style="margin-top: 16px;">

@@ -1,5 +1,5 @@
 import { getSafeLocalStorage } from "../../local-storage.ts";
-import { en } from "../locales/en.ts";
+import { vi } from "../locales/vi.ts";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
@@ -15,7 +15,7 @@ export { SUPPORTED_LOCALES, isSupportedLocale };
 
 class I18nManager {
   private locale: Locale = DEFAULT_LOCALE;
-  private translations: Partial<Record<Locale, TranslationMap>> = { [DEFAULT_LOCALE]: en };
+  private translations: Partial<Record<Locale, TranslationMap>> = { [DEFAULT_LOCALE]: vi };
   private subscribers: Set<Subscriber> = new Set();
 
   constructor() {
@@ -121,7 +121,7 @@ class I18nManager {
       }
     }
 
-    // Fallback to English.
+    // Fallback to default locale.
     if (value === undefined && this.locale !== DEFAULT_LOCALE) {
       value = this.translations[DEFAULT_LOCALE];
       for (const k of keys) {

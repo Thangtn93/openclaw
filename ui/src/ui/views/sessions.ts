@@ -52,15 +52,15 @@ export type SessionsProps = {
 const THINK_LEVELS = ["", "off", "minimal", "low", "medium", "high", "xhigh"] as const;
 const BINARY_THINK_LEVELS = ["", "off", "on"] as const;
 const VERBOSE_LEVELS = [
-  { value: "", label: "inherit" },
-  { value: "off", label: "off (explicit)" },
-  { value: "on", label: "on" },
-  { value: "full", label: "full" },
+  { value: "", label: "kế thừa" },
+  { value: "off", label: "tắt (tường minh)" },
+  { value: "on", label: "bật" },
+  { value: "full", label: "đầy đủ" },
 ] as const;
 const FAST_LEVELS = [
-  { value: "", label: "inherit" },
-  { value: "on", label: "on" },
-  { value: "off", label: "off" },
+  { value: "", label: "kế thừa" },
+  { value: "on", label: "bật" },
+  { value: "off", label: "tắt" },
 ] as const;
 const REASONING_LEVELS = ["", "off", "on", "stream"] as const;
 const PAGE_SIZES = [10, 25, 50, 100] as const;
@@ -104,7 +104,7 @@ function withCurrentLabeledOption(
   if (options.some((option) => option.value === current)) {
     return [...options];
   }
-  return [...options, { value: current, label: `${current} (custom)` }];
+  return [...options, { value: current, label: `${current} (tuỳ chỉnh)` }];
 }
 
 function resolveThinkLevelDisplay(value: string, isBinary: boolean): string {
@@ -214,20 +214,20 @@ export function renderSessions(props: SessionsProps) {
     <section class="card">
       <div class="row" style="justify-content: space-between; margin-bottom: 12px;">
         <div>
-          <div class="card-title">Sessions</div>
-          <div class="card-sub">${props.result ? `Store: ${props.result.path}` : "Active session keys and per-session overrides."}</div>
+          <div class="card-title">Phiên</div>
+          <div class="card-sub">${props.result ? `Kho: ${props.result.path}` : "Session key đang hoạt động và ghi đè theo phiên."}</div>
         </div>
         <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-          ${props.loading ? "Loading…" : "Refresh"}
+          ${props.loading ? "Đang tải…" : "Làm mới"}
         </button>
       </div>
 
       <div class="filters" style="margin-bottom: 12px;">
         <label class="field-inline">
-          <span>Active</span>
+          <span>Hoạt động</span>
           <input
             style="width: 72px;"
-            placeholder="min"
+            placeholder="phút"
             .value=${props.activeMinutes}
             @input=${(e: Event) =>
               props.onFiltersChange({
@@ -239,7 +239,7 @@ export function renderSessions(props: SessionsProps) {
           />
         </label>
         <label class="field-inline">
-          <span>Limit</span>
+          <span>Giới hạn</span>
           <input
             style="width: 64px;"
             .value=${props.limit}
@@ -264,7 +264,7 @@ export function renderSessions(props: SessionsProps) {
                 includeUnknown: props.includeUnknown,
               })}
           />
-          <span>Global</span>
+          <span>Toàn cục</span>
         </label>
         <label class="field-inline checkbox">
           <input
@@ -278,7 +278,7 @@ export function renderSessions(props: SessionsProps) {
                 includeUnknown: (e.target as HTMLInputElement).checked,
               })}
           />
-          <span>Unknown</span>
+          <span>Không rõ</span>
         </label>
       </div>
 
@@ -293,7 +293,7 @@ export function renderSessions(props: SessionsProps) {
           <div class="data-table-search">
             <input
               type="text"
-              placeholder="Filter by key, label, kind…"
+              placeholder="Lọc theo key, nhãn, loại…"
               .value=${props.searchQuery}
               @input=${(e: Event) => props.onSearchChange((e.target as HTMLInputElement).value)}
             />
@@ -304,19 +304,19 @@ export function renderSessions(props: SessionsProps) {
           props.selectedKeys.size > 0
             ? html`
                 <div class="data-table-bulk-bar">
-                  <span>${props.selectedKeys.size} selected</span>
+                  <span>${props.selectedKeys.size} đã chọn</span>
                   <button
                     class="btn btn--sm"
                     @click=${props.onDeselectAll}
                   >
-                    Unselect
+                    Bỏ chọn
                   </button>
                   <button
                     class="btn btn--sm danger"
                     ?disabled=${props.loading}
                     @click=${props.onDeleteSelected}
                   >
-                    ${icons.trash} Delete
+                    ${icons.trash} Xoá
                   </button>
                 </div>
               `
@@ -342,20 +342,20 @@ export function renderSessions(props: SessionsProps) {
                             props.onSelectPage(paginated.map((r) => r.key));
                           }
                         }}
-                        aria-label="Select all on page"
+                        aria-label="Chọn tất cả trên trang"
                       />`
                       : nothing
                   }
                 </th>
-                ${sortHeader("key", "Key", "data-table-key-col")}
-                <th>Label</th>
-                ${sortHeader("kind", "Kind")}
-                ${sortHeader("updated", "Updated")}
-                ${sortHeader("tokens", "Tokens")}
-                <th>Thinking</th>
-                <th>Fast</th>
-                <th>Verbose</th>
-                <th>Reasoning</th>
+                ${sortHeader("key", "Khoá", "data-table-key-col")}
+                <th>Nhãn</th>
+                ${sortHeader("kind", "Loại")}
+                ${sortHeader("updated", "Cập nhật")}
+                ${sortHeader("tokens", "Token")}
+                <th>Suy nghĩ</th>
+                <th>Nhanh</th>
+                <th>Chi tiết</th>
+                <th>Lý luận</th>
               </tr>
             </thead>
             <tbody>
@@ -364,7 +364,7 @@ export function renderSessions(props: SessionsProps) {
                   ? html`
                       <tr>
                         <td colspan="10" style="text-align: center; padding: 48px 16px; color: var(--muted)">
-                          No sessions found.
+                          Không tìm thấy phiên.
                         </td>
                       </tr>
                     `
@@ -390,7 +390,7 @@ export function renderSessions(props: SessionsProps) {
                 <div class="data-table-pagination">
                   <div class="data-table-pagination__info">
                     ${page * props.pageSize + 1}-${Math.min((page + 1) * props.pageSize, totalRows)}
-                    of ${totalRows} row${totalRows === 1 ? "" : "s"}
+                    / ${totalRows} dòng
                   </div>
                   <div class="data-table-pagination__controls">
                     <select
@@ -399,19 +399,19 @@ export function renderSessions(props: SessionsProps) {
                       @change=${(e: Event) =>
                         props.onPageSizeChange(Number((e.target as HTMLSelectElement).value))}
                     >
-                      ${PAGE_SIZES.map((s) => html`<option value=${s}>${s} per page</option>`)}
+                      ${PAGE_SIZES.map((s) => html`<option value=${s}>${s} mỗi trang</option>`)}
                     </select>
                     <button
                       ?disabled=${page <= 0}
                       @click=${() => props.onPageChange(page - 1)}
                     >
-                      Previous
+                      Trước
                     </button>
                     <button
                       ?disabled=${page >= totalPages - 1}
                       @click=${() => props.onPageChange(page + 1)}
                     >
-                      Next
+                      Sau
                     </button>
                   </div>
                 </div>
@@ -472,7 +472,7 @@ function renderRow(
           type="checkbox"
           .checked=${selected}
           @change=${() => onToggleSelect(row.key)}
-          aria-label="Select session"
+          aria-label="Chọn phiên"
         />
       </td>
       <td class="data-table-key-col">
@@ -512,7 +512,7 @@ function renderRow(
         <input
           .value=${row.label ?? ""}
           ?disabled=${disabled}
-          placeholder="(optional)"
+          placeholder="(tuỳ chọn)"
           style="width: 100%; max-width: 140px; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm);"
           @change=${(e: Event) => {
             const value = (e.target as HTMLInputElement).value.trim();
@@ -539,7 +539,7 @@ function renderRow(
           ${thinkLevels.map(
             (level) =>
               html`<option value=${level} ?selected=${thinking === level}>
-                ${level || "inherit"}
+                ${level || "kế thừa"}
               </option>`,
           )}
         </select>
@@ -590,7 +590,7 @@ function renderRow(
           ${reasoningLevels.map(
             (level) =>
               html`<option value=${level} ?selected=${reasoning === level}>
-                ${level || "inherit"}
+                ${level || "kế thừa"}
               </option>`,
           )}
         </select>

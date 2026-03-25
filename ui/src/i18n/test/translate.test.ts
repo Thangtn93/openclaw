@@ -58,13 +58,9 @@ describe("i18n", () => {
     expect(translate.t("overview.stats.cronNext", { time: "10:00" })).toBe("Next wake 10:00");
   });
 
-  it("should fallback to English if key is missing in another locale", async () => {
-    // We haven't registered other locales in the test environment yet,
-    // but the logic should fallback to 'en' map which is always there.
-    await translate.i18n.setLocale("zh-CN");
-    // Since we don't mock the import, it might fail to load zh-CN,
-    // but let's assume it falls back to English for now.
-    expect(translate.t("common.health")).toBeDefined();
+  it("should fallback to default locale if key is missing in another locale", async () => {
+    await translate.i18n.setLocale("en");
+    expect(translate.t("languages.vi")).toBe("Tiếng Việt");
   });
 
   it("loads translations even when setting the same locale again", async () => {
@@ -100,7 +96,7 @@ describe("i18n", () => {
 
     const fresh = await import("../lib/translate.ts");
 
-    expect(fresh.i18n.getLocale()).toBe("en");
+    expect(fresh.i18n.getLocale()).toBe("vi");
     expect(warningSpy).not.toHaveBeenCalledWith(
       "`--localstorage-file` was provided without a valid path",
       expect.anything(),

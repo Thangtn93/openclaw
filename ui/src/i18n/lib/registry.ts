@@ -1,6 +1,6 @@
 import type { Locale, TranslationMap } from "./types.ts";
 
-type LazyLocale = Exclude<Locale, "en">;
+type LazyLocale = Exclude<Locale, "vi">;
 type LocaleModule = Record<string, TranslationMap>;
 
 type LazyLocaleRegistration = {
@@ -8,11 +8,15 @@ type LazyLocaleRegistration = {
   loader: () => Promise<LocaleModule>;
 };
 
-export const DEFAULT_LOCALE: Locale = "en";
+export const DEFAULT_LOCALE: Locale = "vi";
 
-const LAZY_LOCALES: readonly LazyLocale[] = ["zh-CN", "zh-TW", "pt-BR", "de", "es"];
+const LAZY_LOCALES: readonly LazyLocale[] = ["en", "zh-CN", "zh-TW", "pt-BR", "de", "es"];
 
 const LAZY_LOCALE_REGISTRY: Record<LazyLocale, LazyLocaleRegistration> = {
+  en: {
+    exportName: "en",
+    loader: () => import("../locales/en.ts"),
+  },
   "zh-CN": {
     exportName: "zh_CN",
     loader: () => import("../locales/zh-CN.ts"),

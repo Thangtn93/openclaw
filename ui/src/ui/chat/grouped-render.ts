@@ -334,8 +334,8 @@ function renderDeleteButton(onDelete: () => void, side: DeleteConfirmSide) {
     <span class="chat-delete-wrap">
       <button
         class="chat-group-delete"
-        title="Delete"
-        aria-label="Delete message"
+        title="Xoá"
+        aria-label="Xoá tin nhắn"
         @click=${(e: Event) => {
           if (shouldSkipDeleteConfirm()) {
             onDelete();
@@ -351,14 +351,14 @@ function renderDeleteButton(onDelete: () => void, side: DeleteConfirmSide) {
           const popover = document.createElement("div");
           popover.className = `chat-delete-confirm chat-delete-confirm--${side}`;
           popover.innerHTML = `
-            <p class="chat-delete-confirm__text">Delete this message?</p>
+            <p class="chat-delete-confirm__text">Xoá tin nhắn này?</p>
             <label class="chat-delete-confirm__remember">
               <input type="checkbox" class="chat-delete-confirm__check" />
-              <span>Don't ask again</span>
+              <span>Đừng hỏi lại</span>
             </label>
             <div class="chat-delete-confirm__actions">
-              <button class="chat-delete-confirm__cancel" type="button">Cancel</button>
-              <button class="chat-delete-confirm__yes" type="button">Delete</button>
+              <button class="chat-delete-confirm__cancel" type="button">Huỷ</button>
+              <button class="chat-delete-confirm__yes" type="button">Xoá</button>
             </div>
           `;
           wrap.appendChild(popover);
@@ -608,14 +608,14 @@ function detectJson(text: string): { parsed: unknown; pretty: string } | null {
 /** Build a short summary label for collapsed JSON (type + key count or array length). */
 function jsonSummaryLabel(parsed: unknown): string {
   if (Array.isArray(parsed)) {
-    return `Array (${parsed.length} item${parsed.length === 1 ? "" : "s"})`;
+    return `Mảng (${parsed.length} mục)`;
   }
   if (parsed && typeof parsed === "object") {
     const keys = Object.keys(parsed as Record<string, unknown>);
     if (keys.length <= 4) {
       return `{ ${keys.join(", ")} }`;
     }
-    return `Object (${keys.length} keys)`;
+    return `Đối tượng (${keys.length} khoá)`;
   }
   return "JSON";
 }
@@ -625,8 +625,8 @@ function renderExpandButton(markdown: string, onOpenSidebar: (content: string) =
     <button
       class="btn btn--xs chat-expand-btn"
       type="button"
-      title="Open in canvas"
-      aria-label="Open in canvas"
+      title="Mở trong canvas"
+      aria-label="Mở trong canvas"
       @click=${() => onOpenSidebar(markdown)}
     >
       <span class="chat-expand-btn__icon" aria-hidden="true">${icons.panelRightOpen}</span>

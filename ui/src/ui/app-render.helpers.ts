@@ -395,8 +395,8 @@ export function renderChatMobileToggle(state: AppViewState) {
             }
           }
         }}
-        title="Chat settings"
-        aria-label="Chat settings"
+        title="Cài đặt chat"
+        aria-label="Cài đặt chat"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"></circle>
@@ -530,7 +530,7 @@ function renderChatModelSelect(state: AppViewState) {
     <label class="field chat-controls__session chat-controls__model">
       <select
         data-chat-model-select="true"
-        aria-label="Chat model"
+        aria-label="Model chat"
         ?disabled=${disabled}
         @change=${async (e: Event) => {
           const next = (e.target as HTMLSelectElement).value.trim();
@@ -930,14 +930,14 @@ export function renderTopbarThemeModeToggle(state: AppViewState) {
   };
 
   return html`
-    <div class="topbar-theme-mode" role="group" aria-label="Color mode">
+    <div class="topbar-theme-mode" role="group" aria-label="Chế độ màu">
       ${THEME_MODE_OPTIONS.map(
         (opt) => html`
           <button
             type="button"
             class="topbar-theme-mode__btn ${opt.id === state.themeMode ? "topbar-theme-mode__btn--active" : ""}"
             title=${opt.label}
-            aria-label="Color mode: ${opt.label}"
+            aria-label="Chế độ màu: ${opt.label}"
             aria-pressed=${opt.id === state.themeMode}
             @click=${(e: Event) => applyMode(opt.id, e)}
           >
@@ -960,8 +960,8 @@ export function renderSidebarConnectionStatus(state: AppViewState) {
       class="sidebar-version__status ${toneClass}"
       role="img"
       aria-live="polite"
-      aria-label="Gateway status: ${label}"
-      title="Gateway status: ${label}"
+      aria-label="Trạng thái gateway: ${label}"
+      title="Trạng thái gateway: ${label}"
     ></span>
   `;
 }
@@ -1011,11 +1011,11 @@ export function renderThemeToggle(state: AppViewState) {
   };
 
   return html`
-    <div class="theme-orb" aria-label="Theme">
+    <div class="theme-orb" aria-label="Giao diện">
       <button
         type="button"
         class="theme-orb__trigger"
-        title="Theme"
+        title="Giao diện"
         aria-haspopup="menu"
         aria-expanded="false"
         @click=${toggleOpen}

@@ -20,8 +20,8 @@ export function renderInstances(props: InstancesProps) {
     <section class="card">
       <div class="row" style="justify-content: space-between;">
         <div>
-          <div class="card-title">Connected Instances</div>
-          <div class="card-sub">Presence beacons from the gateway and clients.</div>
+          <div class="card-title">Instances đã kết nối</div>
+          <div class="card-sub">Beacon hiện diện từ gateway và client.</div>
         </div>
         <div class="row" style="gap: 8px;">
           <button
@@ -30,15 +30,15 @@ export function renderInstances(props: InstancesProps) {
               hostsRevealed = !hostsRevealed;
               props.onRefresh();
             }}
-            title=${masked ? "Show hosts and IPs" : "Hide hosts and IPs"}
-            aria-label="Toggle host visibility"
+            title=${masked ? "Hiện host và IP" : "Ẩn host và IP"}
+            aria-label="Bật/tắt hiển thị host"
             aria-pressed=${!masked}
             style="width: 36px; height: 36px;"
           >
             ${masked ? icons.eyeOff : icons.eye}
           </button>
           <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-            ${props.loading ? "Loading…" : "Refresh"}
+            ${props.loading ? "Đang tải…" : "Làm mới"}
           </button>
         </div>
       </div>
@@ -60,7 +60,7 @@ export function renderInstances(props: InstancesProps) {
         ${
           props.entries.length === 0
             ? html`
-                <div class="muted">No instances reported yet.</div>
+                <div class="muted">Chưa có instance nào được báo cáo.</div>
               `
             : props.entries.map((entry) => renderEntry(entry, masked))
         }
@@ -70,17 +70,17 @@ export function renderInstances(props: InstancesProps) {
 }
 
 function renderEntry(entry: PresenceEntry, masked: boolean) {
-  const lastInput = entry.lastInputSeconds != null ? `${entry.lastInputSeconds}s ago` : "n/a";
-  const mode = entry.mode ?? "unknown";
-  const host = entry.host ?? "unknown host";
+  const lastInput = entry.lastInputSeconds != null ? `${entry.lastInputSeconds} giây trước` : "n/a";
+  const mode = entry.mode ?? "không rõ";
+  const host = entry.host ?? "host không rõ";
   const ip = entry.ip ?? null;
   const roles = Array.isArray(entry.roles) ? entry.roles.filter(Boolean) : [];
   const scopes = Array.isArray(entry.scopes) ? entry.scopes.filter(Boolean) : [];
   const scopesLabel =
     scopes.length > 0
       ? scopes.length > 3
-        ? `${scopes.length} scopes`
-        : `scopes: ${scopes.join(", ")}`
+        ? `${scopes.length} scope`
+        : `scope: ${scopes.join(", ")}`
       : null;
   return html`
     <div class="list-item">
@@ -107,8 +107,8 @@ function renderEntry(entry: PresenceEntry, masked: boolean) {
       </div>
       <div class="list-meta">
         <div>${formatPresenceAge(entry)}</div>
-        <div class="muted">Last input ${lastInput}</div>
-        <div class="muted">Reason ${entry.reason ?? ""}</div>
+        <div class="muted">Lần nhập cuối ${lastInput}</div>
+        <div class="muted">Lý do ${entry.reason ?? ""}</div>
       </div>
     </div>
   `;

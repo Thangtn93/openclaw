@@ -703,7 +703,7 @@ function renderTextInput(params: {
           <button
             type="button"
             class="cfg-input__reset"
-            title="Reset to default"
+            title="Đặt lại về mặc định"
             ?disabled=${disabled || sensitiveState.isRedacted}
             @click=${() => onPatch(path, schema.default)}
           >↺</button>
@@ -1074,7 +1074,7 @@ function renderArray(params: {
           }}
         >
           <span class="cfg-array__add-icon">${icons.plus}</span>
-          Add
+          Thêm
         </button>
       </div>
       ${help ? html`<div class="cfg-array__help">${help}</div>` : nothing}
@@ -1082,7 +1082,7 @@ function renderArray(params: {
       ${
         arr.length === 0
           ? html`
-              <div class="cfg-array__empty">No items yet. Click "Add" to create one.</div>
+              <div class="cfg-array__empty">Chưa có mục nào. Bấm "Thêm" để tạo mới.</div>
             `
           : html`
         <div class="cfg-array__items">
@@ -1094,7 +1094,7 @@ function renderArray(params: {
                 <button
                   type="button"
                   class="cfg-array__item-remove"
-                  title="Remove item"
+                  title="Xoá mục"
                   ?disabled=${disabled}
                   @click=${() => {
                     const next = [...arr];
@@ -1202,7 +1202,7 @@ function renderMapField(params: {
       ${
         visibleEntries.length === 0
           ? html`
-              <div class="cfg-map__empty">No custom entries.</div>
+              <div class="cfg-map__empty">Không có mục tuỳ chỉnh.</div>
             `
           : html`
         <div class="cfg-map__items">
@@ -1223,7 +1223,7 @@ function renderMapField(params: {
                     <input
                       type="text"
                       class="cfg-input cfg-input--sm"
-                      placeholder="Key"
+                      placeholder="Khoá"
                       .value=${key}
                       ?disabled=${disabled}
                       @change=${(e: Event) => {
@@ -1244,7 +1244,7 @@ function renderMapField(params: {
                   <button
                     type="button"
                     class="cfg-map__item-remove"
-                    title="Remove entry"
+                    title="Xoá mục"
                     ?disabled=${disabled}
                     @click=${() => {
                       const next = { ...value };
@@ -1263,7 +1263,7 @@ function renderMapField(params: {
                           <textarea
                             class="cfg-textarea cfg-textarea--sm${sensitiveState.isRedacted ? " cfg-textarea--redacted" : ""}"
                             placeholder=${
-                              sensitiveState.isRedacted ? REDACTED_PLACEHOLDER : "JSON value"
+                              sensitiveState.isRedacted ? REDACTED_PLACEHOLDER : "Giá trị JSON"
                             }
                             rows="2"
                             .value=${sensitiveState.isRedacted ? "" : fallback}

@@ -196,7 +196,7 @@ function renderCompactionIndicator(status: CompactionIndicatorStatus | null | un
   if (status.active) {
     return html`
       <div class="compaction-indicator compaction-indicator--active" role="status" aria-live="polite">
-        ${icons.loader} Compacting context...
+        ${icons.loader} Đang nén ngữ cảnh...
       </div>
     `;
   }
@@ -205,7 +205,7 @@ function renderCompactionIndicator(status: CompactionIndicatorStatus | null | un
     if (elapsed < COMPACTION_TOAST_DURATION_MS) {
       return html`
         <div class="compaction-indicator compaction-indicator--complete" role="status" aria-live="polite">
-          ${icons.check} Context compacted
+          ${icons.check} Đã nén ngữ cảnh
         </div>
       `;
     }
@@ -223,18 +223,18 @@ function renderFallbackIndicator(status: FallbackIndicatorStatus | null | undefi
     return nothing;
   }
   const details = [
-    `Selected: ${status.selected}`,
-    phase === "cleared" ? `Active: ${status.selected}` : `Active: ${status.active}`,
-    phase === "cleared" && status.previous ? `Previous fallback: ${status.previous}` : null,
-    status.reason ? `Reason: ${status.reason}` : null,
-    status.attempts.length > 0 ? `Attempts: ${status.attempts.slice(0, 3).join(" | ")}` : null,
+    `Đã chọn: ${status.selected}`,
+    phase === "cleared" ? `Đang dùng: ${status.selected}` : `Đang dùng: ${status.active}`,
+    phase === "cleared" && status.previous ? `Fallback trước đó: ${status.previous}` : null,
+    status.reason ? `Lý do: ${status.reason}` : null,
+    status.attempts.length > 0 ? `Lần thử: ${status.attempts.slice(0, 3).join(" | ")}` : null,
   ]
     .filter(Boolean)
     .join(" • ");
   const message =
     phase === "cleared"
-      ? `Fallback cleared: ${status.selected}`
-      : `Fallback active: ${status.active}`;
+      ? `Đã xoá fallback: ${status.selected}`
+      : `Fallback đang bật: ${status.active}`;
   const className =
     phase === "cleared"
       ? "compaction-indicator compaction-indicator--fallback-cleared"
@@ -442,11 +442,11 @@ function renderAttachmentPreview(props: ChatProps): TemplateResult | typeof noth
       ${attachments.map(
         (att) => html`
           <div class="chat-attachment-thumb">
-            <img src=${att.dataUrl} alt="Attachment preview" />
+            <img src=${att.dataUrl} alt="Xem trước tệp đính kèm" />
             <button
               class="chat-attachment-remove"
               type="button"
-              aria-label="Remove attachment"
+              aria-label="Gỡ tệp đính kèm"
               @click=${() => {
                 const next = (props.attachments ?? []).filter((a) => a.id !== att.id);
                 props.onAttachmentsChange?.(next);
@@ -586,7 +586,7 @@ function tokenEstimate(draft: string): string | null {
   if (draft.length < 100) {
     return null;
   }
-  return `~${Math.ceil(draft.length / 4)} tokens`;
+  return `~${Math.ceil(draft.length / 4)} token`;
 }
 
 /**
@@ -597,14 +597,14 @@ function exportMarkdown(props: ChatProps): void {
 }
 
 const WELCOME_SUGGESTIONS = [
-  "What can you do?",
-  "Summarize my recent sessions",
-  "Help me configure a channel",
-  "Check system health",
+  "Bạn có thể làm gì?",
+  "Tóm tắt các phiên gần đây",
+  "Giúp tôi cấu hình một kênh",
+  "Kiểm tra tình trạng hệ thống",
 ];
 
 function renderWelcomeState(props: ChatProps): TemplateResult {
-  const name = props.assistantName || "Assistant";
+  const name = props.assistantName || "Trợ lý";
   const avatar = resolveAgentAvatarUrl({
     identity: {
       avatar: props.assistantAvatar ?? undefined,
@@ -623,10 +623,10 @@ function renderWelcomeState(props: ChatProps): TemplateResult {
       }
       <h2>${name}</h2>
       <div class="agent-chat__badges">
-        <span class="agent-chat__badge"><img src=${logoUrl} alt="" /> Ready to chat</span>
+        <span class="agent-chat__badge"><img src=${logoUrl} alt="" /> Sẵn sàng trò chuyện</span>
       </div>
       <p class="agent-chat__hint">
-        Type a message below &middot; <kbd>/</kbd> for commands
+        Nhập tin nhắn bên dưới &middot; <kbd>/</kbd> để xem lệnh
       </p>
       <div class="agent-chat__suggestions">
         ${WELCOME_SUGGESTIONS.map(
@@ -655,15 +655,15 @@ function renderSearchBar(requestUpdate: () => void): TemplateResult | typeof not
       ${icons.search}
       <input
         type="text"
-        placeholder="Search messages..."
-        aria-label="Search messages"
+        placeholder="Tìm tin nhắn..."
+        aria-label="Tìm tin nhắn"
         .value=${vs.searchQuery}
         @input=${(e: Event) => {
           vs.searchQuery = (e.target as HTMLInputElement).value;
           requestUpdate();
         }}
       />
-      <button class="btn btn--ghost" aria-label="Close search" @click=${() => {
+      <button class="btn btn--ghost" aria-label="Đóng tìm kiếm" @click=${() => {
         vs.searchOpen = false;
         vs.searchQuery = "";
         requestUpdate();
@@ -700,7 +700,7 @@ function renderPinnedSection(
         requestUpdate();
       }}>
         ${icons.bookmark}
-        ${entries.length} pinned
+        ${entries.length} đã ghim
         <span class="collapse-chevron ${vs.pinnedExpanded ? "" : "collapse-chevron--collapsed"}">${icons.chevronDown}</span>
       </button>
       ${
@@ -710,12 +710,12 @@ function renderPinnedSection(
               ${entries.map(
                 ({ index, text, role }) => html`
                 <div class="agent-chat__pinned-item">
-                  <span class="agent-chat__pinned-role">${role === "user" ? "You" : "Assistant"}</span>
+                  <span class="agent-chat__pinned-role">${role === "user" ? "Bạn" : "Trợ lý"}</span>
                   <span class="agent-chat__pinned-text">${text.slice(0, 100)}${text.length > 100 ? "..." : ""}</span>
                   <button class="btn btn--ghost" @click=${() => {
                     pinned.unpin(index);
                     requestUpdate();
-                  }} title="Unpin">
+                  }} title="Bỏ ghim">
                     ${icons.x}
                   </button>
                 </div>
@@ -740,7 +740,7 @@ function renderSlashMenu(
   // Arg-picker mode: show options for the selected command
   if (vs.slashMenuMode === "args" && vs.slashMenuCommand && vs.slashMenuArgItems.length > 0) {
     return html`
-      <div class="slash-menu" role="listbox" aria-label="Command arguments">
+      <div class="slash-menu" role="listbox" aria-label="Tham số lệnh">
         <div class="slash-menu-group">
           <div class="slash-menu-group__label">/${vs.slashMenuCommand.name} ${vs.slashMenuCommand.description}</div>
           ${vs.slashMenuArgItems.map(
@@ -763,10 +763,10 @@ function renderSlashMenu(
           )}
         </div>
         <div class="slash-menu-footer">
-          <kbd>↑↓</kbd> navigate
-          <kbd>Tab</kbd> fill
-          <kbd>Enter</kbd> run
-          <kbd>Esc</kbd> close
+          <kbd>↑↓</kbd> di chuyển
+          <kbd>Tab</kbd> điền
+          <kbd>Enter</kbd> chạy
+          <kbd>Esc</kbd> đóng
         </div>
       </div>
     `;
@@ -815,10 +815,10 @@ function renderSlashMenu(
               <span class="slash-menu-desc">${cmd.description}</span>
               ${
                 cmd.argOptions?.length
-                  ? html`<span class="slash-menu-badge">${cmd.argOptions.length} options</span>`
+                  ? html`<span class="slash-menu-badge">${cmd.argOptions.length} tuỳ chọn</span>`
                   : cmd.executeLocal && !cmd.args
                     ? html`
-                        <span class="slash-menu-badge">instant</span>
+                        <span class="slash-menu-badge">tức thì</span>
                       `
                     : nothing
               }
@@ -830,13 +830,13 @@ function renderSlashMenu(
   }
 
   return html`
-    <div class="slash-menu" role="listbox" aria-label="Slash commands">
+    <div class="slash-menu" role="listbox" aria-label="Lệnh slash">
       ${sections}
       <div class="slash-menu-footer">
-        <kbd>↑↓</kbd> navigate
-        <kbd>Tab</kbd> fill
-        <kbd>Enter</kbd> select
-        <kbd>Esc</kbd> close
+        <kbd>↑↓</kbd> di chuyển
+        <kbd>Tab</kbd> điền
+        <kbd>Enter</kbd> chọn
+        <kbd>Esc</kbd> đóng
       </div>
     </div>
   `;
@@ -867,9 +867,9 @@ export function renderChat(props: ChatProps) {
 
   const placeholder = props.connected
     ? hasAttachments
-      ? "Add a message or paste more images..."
-      : `Message ${props.assistantName || "agent"} (Enter to send)`
-    : "Connect to the gateway to start chatting...";
+      ? "Thêm tin nhắn hoặc dán thêm ảnh..."
+      : `Nhắn ${props.assistantName || "agent"} (Enter để gửi)`
+    : "Kết nối tới gateway để bắt đầu trò chuyện...";
 
   const requestUpdate = props.onRequestUpdate ?? (() => {});
   const getDraft = props.getDraft ?? (() => props.draft);
@@ -907,7 +907,7 @@ export function renderChat(props: ChatProps) {
       ${
         props.loading
           ? html`
-              <div class="chat-loading-skeleton" aria-label="Loading chat">
+              <div class="chat-loading-skeleton" aria-label="Đang tải chat">
                 <div class="chat-line assistant">
                   <div class="chat-msg">
                     <div class="chat-bubble">
@@ -940,7 +940,7 @@ export function renderChat(props: ChatProps) {
       ${
         isEmpty && vs.searchOpen
           ? html`
-              <div class="agent-chat__empty">No matching messages</div>
+              <div class="agent-chat__empty">Không có tin nhắn phù hợp</div>
             `
           : nothing
       }
@@ -1129,8 +1129,8 @@ export function renderChat(props: ChatProps) {
               class="chat-focus-exit"
               type="button"
               @click=${props.onToggleFocusMode}
-              aria-label="Exit focus mode"
-              title="Exit focus mode"
+              aria-label="Thoát chế độ tập trung"
+              title="Thoát chế độ tập trung"
             >
               ${icons.x}
             </button>
@@ -1178,7 +1178,7 @@ export function renderChat(props: ChatProps) {
         props.queue.length
           ? html`
             <div class="chat-queue" role="status" aria-live="polite">
-              <div class="chat-queue__title">Queued (${props.queue.length})</div>
+              <div class="chat-queue__title">Đang chờ (${props.queue.length})</div>
               <div class="chat-queue__list">
                 ${props.queue.map(
                   (item) => html`
@@ -1186,13 +1186,13 @@ export function renderChat(props: ChatProps) {
                       <div class="chat-queue__text">
                         ${
                           item.text ||
-                          (item.attachments?.length ? `Image (${item.attachments.length})` : "")
+                          (item.attachments?.length ? `Ảnh (${item.attachments.length})` : "")
                         }
                       </div>
                       <button
                         class="btn chat-queue__remove"
                         type="button"
-                        aria-label="Remove queued message"
+                        aria-label="Gỡ tin nhắn đang chờ"
                         @click=${() => props.onQueueRemove(item.id)}
                       >
                         ${icons.x}
@@ -1218,7 +1218,7 @@ export function renderChat(props: ChatProps) {
               type="button"
               @click=${props.onScrollToBottom}
             >
-              ${icons.arrowDown} New messages
+              ${icons.arrowDown} Tin nhắn mới
             </button>
           `
           : nothing
@@ -1247,7 +1247,7 @@ export function renderChat(props: ChatProps) {
           @keydown=${handleKeyDown}
           @input=${handleInput}
           @paste=${(e: ClipboardEvent) => handlePaste(e, props)}
-          placeholder=${vs.sttRecording ? "Listening..." : placeholder}
+          placeholder=${vs.sttRecording ? "Đang nghe..." : placeholder}
           rows="1"
         ></textarea>
 
@@ -1258,8 +1258,8 @@ export function renderChat(props: ChatProps) {
               @click=${() => {
                 document.querySelector<HTMLInputElement>(".agent-chat__file-input")?.click();
               }}
-              title="Attach file"
-              aria-label="Attach file"
+              title="Đính kèm tệp"
+              aria-label="Đính kèm tệp"
               ?disabled=${!props.connected}
             >
               ${icons.paperclip}
@@ -1310,7 +1310,7 @@ export function renderChat(props: ChatProps) {
                         }
                       }
                     }}
-                    title=${vs.sttRecording ? "Stop recording" : "Voice input"}
+                    title=${vs.sttRecording ? "Dừng ghi âm" : "Nhập bằng giọng nói"}
                     ?disabled=${!props.connected}
                   >
                     ${vs.sttRecording ? icons.micOff : icons.mic}
@@ -1331,21 +1331,21 @@ export function renderChat(props: ChatProps) {
                     <button
                       class="btn btn--ghost"
                       @click=${props.onNewSession}
-                      title="New session"
-                      aria-label="New session"
+                      title="Phiên mới"
+                      aria-label="Phiên mới"
                     >
                       ${icons.plus}
                     </button>
                   `
             }
-            <button class="btn btn--ghost" @click=${() => exportMarkdown(props)} title="Export" aria-label="Export chat" ?disabled=${props.messages.length === 0}>
+            <button class="btn btn--ghost" @click=${() => exportMarkdown(props)} title="Xuất" aria-label="Xuất chat" ?disabled=${props.messages.length === 0}>
               ${icons.download}
             </button>
 
             ${
               canAbort && (isBusy || props.sending)
                 ? html`
-                  <button class="chat-send-btn chat-send-btn--stop" @click=${props.onAbort} title="Stop" aria-label="Stop generating">
+                  <button class="chat-send-btn chat-send-btn--stop" @click=${props.onAbort} title="Dừng" aria-label="Dừng tạo">
                     ${icons.stop}
                   </button>
                 `
@@ -1359,8 +1359,8 @@ export function renderChat(props: ChatProps) {
                       props.onSend();
                     }}
                     ?disabled=${!props.connected || props.sending}
-                    title=${isBusy ? "Queue" : "Send"}
-                    aria-label=${isBusy ? "Queue message" : "Send message"}
+                    title=${isBusy ? "Xếp hàng" : "Gửi"}
+                    aria-label=${isBusy ? "Đưa tin nhắn vào hàng đợi" : "Gửi tin nhắn"}
                   >
                     ${icons.send}
                   </button>
@@ -1433,7 +1433,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
       key: "chat:history:notice",
       message: {
         role: "system",
-        content: `Showing last ${CHAT_HISTORY_RENDER_LIMIT} messages (${historyStart} hidden).`,
+        content: `Đang hiển thị ${CHAT_HISTORY_RENDER_LIMIT} tin nhắn gần nhất (${historyStart} đang ẩn).`,
         timestamp: Date.now(),
       },
     });
@@ -1450,7 +1450,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
           typeof marker.id === "string"
             ? `divider:compaction:${marker.id}`
             : `divider:compaction:${normalized.timestamp}:${i}`,
-        label: "Compaction",
+        label: "Nén",
         timestamp: normalized.timestamp ?? Date.now(),
       });
       continue;

@@ -1244,14 +1244,14 @@ export function renderCron(props: CronProps) {
                                     })}
                                   placeholder="3600"
                                 />
-                                <div class="cron-help">Minimum seconds between alerts.</div>
+                                <div class="cron-help">Số giây tối thiểu giữa các cảnh báo.</div>
                                 ${renderFieldError(
                                   props.fieldErrors.failureAlertCooldownSeconds,
                                   errorIdForField("failureAlertCooldownSeconds"),
                                 )}
                               </label>
                               <label class="field">
-                                ${renderFieldLabel("Alert channel")}
+                                ${renderFieldLabel("Kênh cảnh báo")}
                                 <select
                                   .value=${props.form.failureAlertChannel || "last"}
                                   @change=${(e: Event) =>
@@ -1268,7 +1268,7 @@ export function renderCron(props: CronProps) {
                                 </select>
                               </label>
                               <label class="field">
-                                ${renderFieldLabel("Alert to")}
+                                ${renderFieldLabel("Gửi cảnh báo tới")}
                                 <input
                                   .value=${props.form.failureAlertTo}
                                   list="cron-delivery-to-suggestions"
@@ -1276,14 +1276,14 @@ export function renderCron(props: CronProps) {
                                     props.onFormChange({
                                       failureAlertTo: (e.target as HTMLInputElement).value,
                                     })}
-                                  placeholder="+1555... or chat id"
+                                  placeholder="+1555... hoặc chat id"
                                 />
                                 <div class="cron-help">
-                                  Optional recipient override for failure alerts.
+                                  Tuỳ chọn ghi đè người nhận cho cảnh báo lỗi.
                                 </div>
                               </label>
                               <label class="field">
-                                ${renderFieldLabel("Alert mode")}
+                                ${renderFieldLabel("Chế độ cảnh báo")}
                                 <select
                                   .value=${props.form.failureAlertDeliveryMode || "announce"}
                                   @change=${(e: Event) =>
@@ -1292,19 +1292,19 @@ export function renderCron(props: CronProps) {
                                         .value as CronFormState["failureAlertDeliveryMode"],
                                     })}
                                 >
-                                  <option value="announce">Announce (via channel)</option>
+                                  <option value="announce">Thông báo (qua kênh)</option>
                                   <option value="webhook">Webhook (HTTP POST)</option>
                                 </select>
                               </label>
                               <label class="field">
-                                ${renderFieldLabel("Alert account ID")}
+                                ${renderFieldLabel("ID tài khoản cảnh báo")}
                                 <input
                                   .value=${props.form.failureAlertAccountId}
                                   @input=${(e: Event) =>
                                     props.onFormChange({
                                       failureAlertAccountId: (e.target as HTMLInputElement).value,
                                     })}
-                                  placeholder="Account ID for multi-account setups"
+                                  placeholder="ID tài khoản cho thiết lập nhiều tài khoản"
                                 />
                               </label>
                             `

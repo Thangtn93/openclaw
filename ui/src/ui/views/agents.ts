@@ -157,7 +157,7 @@ export function renderAgents(props: AgentsProps) {
               ${
                 agents.length === 0
                   ? html`
-                      <option value="">No agents</option>
+                      <option value="">Không có agent</option>
                     `
                   : agents.map(
                       (agent) => html`
@@ -177,20 +177,20 @@ export function renderAgents(props: AgentsProps) {
                       type="button"
                       class="btn btn--sm btn--ghost"
                       @click=${() => void navigator.clipboard.writeText(selectedAgent.id)}
-                      title="Copy agent ID to clipboard"
-                    >Copy ID</button>
+                      title="Sao chép ID agent"
+                    >Sao chép ID</button>
                     <button
                       type="button"
                       class="btn btn--sm btn--ghost"
                       ?disabled=${Boolean(defaultId && selectedAgent.id === defaultId)}
                       @click=${() => props.onSetDefault(selectedAgent.id)}
-                      title=${defaultId && selectedAgent.id === defaultId ? "Already the default agent" : "Set as the default agent"}
-                    >${defaultId && selectedAgent.id === defaultId ? "Default" : "Set Default"}</button>
+                      title=${defaultId && selectedAgent.id === defaultId ? "Đã là agent mặc định" : "Đặt làm agent mặc định"}
+                    >${defaultId && selectedAgent.id === defaultId ? "Mặc định" : "Đặt mặc định"}</button>
                   `
                 : nothing
             }
             <button class="btn btn--sm agents-refresh-btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-              ${props.loading ? "Loading…" : "Refresh"}
+              ${props.loading ? "Đang tải…" : "Làm mới"}
             </button>
           </div>
         </div>
@@ -205,8 +205,8 @@ export function renderAgents(props: AgentsProps) {
           !selectedAgent
             ? html`
                 <div class="card">
-                  <div class="card-title">Select an agent</div>
-                  <div class="card-sub">Pick an agent to inspect its workspace and tools.</div>
+                  <div class="card-title">Chọn agent</div>
+                  <div class="card-sub">Chọn một agent để xem workspace và công cụ.</div>
                 </div>
               `
             : html`
